@@ -1,4 +1,43 @@
-const http = require("http");
+const express = require("express");
+const app = express();
+const path = require("path");
+
+const pages = ["about.html", "contact-me.html", "index.html"];
+
+app.get("/:name", (req, res, next) => {
+  const options = {
+    root: path.join(__dirname, "public"),
+  };
+
+  const filename = req.params.name.includes(".html")
+    ? req.params.name
+    : req.params.name + ".html";
+
+  if (pages.includes(filename)) {
+    res.sendFile(filename, options, (err) => {
+      if (err) {
+        throw err;
+      } else {
+        console.log("Sent:", filename);
+      }
+    });
+  } else {
+    res.sendFile("404.html", options, (err) => {
+      if (err) {
+        throw err;
+      } else {
+        console.log("Sent:", "404.html");
+      }
+    });
+  }
+});
+
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
+/* const http = require("http");
 const url = require("url");
 const fs = require("fs");
 
@@ -13,7 +52,7 @@ http
     //just throwing errors for handling
 
     if (pages.includes(filename.toString())) {
-      fs.readFile(filename, function (err, data) {
+      fs.readFile(filename, function (err, data) {~
         if (err) throw err;
 
         res.writeHead(200, { "content-type": "text/html" });
@@ -31,3 +70,4 @@ http
     }
   })
   .listen(8080);
+ */
