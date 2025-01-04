@@ -1,4 +1,4 @@
-This is why the console was logging the 404 every request. The Send ends the cycle but it does not exit the function 
+This is why the console was logging the 404 every request in the Express Branch. The Send ends the cycle but it does not exit the function 
 
 app.use((req, res) => {
   // This works and this ends the request-response cycle
